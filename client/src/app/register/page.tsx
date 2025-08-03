@@ -4,6 +4,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { authAPI, setAuthToken } from '../../utils/auth';
 
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 export default function Register() {
   const [formData, setFormData] = useState({
     name: '',
@@ -36,8 +44,10 @@ export default function Register() {
       );
       setAuthToken(response.token);
       router.push('/');
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Registration failed');
+    } catch (error: unknown) {
+      const apiError = error as ApiError;
+      const errorMessage = apiError.response?.data?.message || 'Registration failed';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

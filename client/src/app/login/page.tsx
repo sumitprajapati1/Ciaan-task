@@ -4,6 +4,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { authAPI, setAuthToken } from '../../utils/auth';
 
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,8 +28,10 @@ export default function Login() {
       const response = await authAPI.login(email, password);
       setAuthToken(response.token);
       router.push('/');
-    } catch (error: any) {
-      setError(error.response?.data?.message || 'Login failed');
+    } catch (error: unknown) {
+      const apiError = error as ApiError;
+      const errorMessage = apiError.response?.data?.message || 'Login failed';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -73,7 +83,7 @@ export default function Login() {
 
           <div className="text-center">
             <Link href="/register" className="text-blue-600 hover:text-blue-500">
-              Don't have an account? Sign up
+              Don&apos;t have an account? Sign up
             </Link>
           </div>
         </form>

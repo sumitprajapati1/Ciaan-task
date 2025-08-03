@@ -12,6 +12,17 @@ interface User {
   bio: string;
 }
 
+interface Comment {
+  _id: string;
+  content: string;
+  author: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  createdAt: string;
+}
+
 interface Post {
   _id: string;
   content: string;
@@ -21,47 +32,63 @@ interface Post {
     email: string;
   };
   likes: string[];
-  comments: any[];
+  comments: Comment[];
   createdAt: string;
 }
 
-export default function ProfilePage({ params }: { params: { userid: string } }) {
+export default function ProfilePage({ params }: { params: Promise<{ userid: string }> }) {
+  return <ProfilePageClient params={params} />;
+}
+
+function ProfilePageClient({ params }: { params: Promise<{ userid: string }> }) {
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [userid, setUserid] = useState<string>('');
   const router = useRouter();
 
   useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setUserid(resolvedParams.userid);
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!userid) return;
+    
     const token = getAuthToken();
     if (!token) {
       router.push('/login');
       return;
     }
-    fetchUserAndPosts();
-  }, [params.userid, router]);
 
-  const fetchUserAndPosts = async () => {
-    try {
-      const [userResponse, postsResponse] = await Promise.all([
-        api.get(`/users/${params.userid}`),
-        api.get(`/posts/user/${params.userid}`)
-      ]);
-      
-      setUser(userResponse.data);
-      setPosts(postsResponse.data);
-      
-      // Check if this is the current user's profile
-      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-      setIsCurrentUser(currentUser._id === params.userid);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchUserAndPosts = async () => {
+      try {
+        const [userResponse, postsResponse] = await Promise.all([
+          api.get(`/users/${userid}`),
+          api.get(`/posts/user/${userid}`)
+        ]);
+        
+        setUser(userResponse.data);
+        setPosts(postsResponse.data);
+        
+        // Check if this is the current user's profile
+        const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+        setIsCurrentUser(currentUser._id === userid);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserAndPosts();
+  }, [userid, router]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -71,8 +98,6 @@ export default function ProfilePage({ params }: { params: { userid: string } }) 
 
   const handlePhotoUpload = async () => {
     if (!selectedFile) return;
-
-    const formData = new FormData();
 
     setUploading(true);
     try {
