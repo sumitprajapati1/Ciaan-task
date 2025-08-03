@@ -1,12 +1,12 @@
 # Mini LinkedIn Community Platform
 
-A full-stack social media platform built with Next.js, Node.js, Express, and MongoDB, featuring user authentication, posts, likes, comments, and profile photo uploads.
+A full-stack social media platform built with Next.js, Node.js, Express, and MongoDB, featuring user authentication, posts, likes and comments.
 
 ## 🚀 Features
 
 ### Core Features
 - **User Authentication**: Register, login, and secure session management
-- **Profile Management**: User profiles with bio and profile photo uploads
+- **Profile Management**: User profiles with bio .
 - **Public Post Feed**: Create, read, and display posts with timestamps
 - **Profile Pages**: View user profiles and their posts
 
@@ -14,7 +14,6 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
 - **Post Interactions**: Like and unlike posts
 - **Comment System**: Add and delete comments on posts
 - **Post Management**: Delete posts (author only)
-- **Profile Photos**: Upload and display profile photos using Multer
 - **Real-time Updates**: Dynamic UI updates for likes, comments, and posts
 
 ## 🛠️ Tech Stack
@@ -31,7 +30,6 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
 - **MongoDB** - NoSQL database
 - **Mongoose** - MongoDB object modeling
 - **JWT** - JSON Web Tokens for authentication
-- **Multer** - File upload middleware
 - **bcryptjs** - Password hashing
 
 ## 📦 Installation & Setup
@@ -57,7 +55,7 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
 3. **Create environment file**
    ```bash
    # Create .env file in server directory
-   MONGODB_URI=mongodb://localhost:27017/mini-linkedin
+   MONGODB_URI=mongo_local_url or atlas cluster url 
    JWT_SECRET=your-secret-key-here
    PORT=5000
    ```
@@ -95,8 +93,8 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
 
 ### Demo Accounts
 You can create your own account or use these demo credentials:
-- **Email**: demo@example.com
-- **Password**: password123
+- **Email**: xyz@gmail.com
+- **Password**: xyz123
 
 ### Features Guide
 
@@ -114,9 +112,9 @@ You can create your own account or use these demo credentials:
    - **Delete**: Click the delete button (only visible to post author)
 
 4. **Profile Management**
-   - Visit your profile page to upload a profile photo
+   - Visit your profile page .
    - View your posts and profile information
-   - Edit bio and upload profile photos
+   - Edit bio 
 
 5. **Viewing Other Profiles**
    - Click on user names to view their profiles
@@ -145,9 +143,6 @@ You can create your own account or use these demo credentials:
 - `GET /api/users/:id` - Get user profile
 - `PUT /api/users/:id` - Update user profile
 
-### File Upload
-- `POST /api/upload/profile-photo` - Upload profile photo
-- `GET /api/upload/uploads/:filename` - Serve uploaded files
 
 ## 🚀 Deployment
 
