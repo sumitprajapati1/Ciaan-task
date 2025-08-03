@@ -42,8 +42,8 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd mini-linkedin
+   git clone https://github.com/sumitprajapati1/Ciaan-task.git
+   cd ciaan-task
    ```
 
 2. **Install server dependencies**
@@ -60,14 +60,9 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
    PORT=5000
    ```
 
-4. **Create uploads directory**
+4. **Start the server**
    ```bash
-   mkdir uploads
-   ```
-
-5. **Start the server**
-   ```bash
-   npm run dev
+   node server.js
    ```
 
 ### Frontend Setup
@@ -93,8 +88,17 @@ A full-stack social media platform built with Next.js, Node.js, Express, and Mon
 
 ### Demo Accounts
 You can create your own account or use these demo credentials:
-- **Email**: xyz@gmail.com
+- **Email**: xyz@gmail.com  
 - **Password**: xyz123
+or
+- **Email**: abc@gmail.com
+- **Password**: 000000
+or
+- **Email**: prajapatisumit009@gmail.com 
+- **Password**: 123123
+
+
+
 
 ### Features Guide
 
@@ -181,7 +185,6 @@ mini-linkedin/
 
 - Password hashing with bcryptjs
 - JWT token-based authentication
-- File upload validation and size limits
 - Authorization checks for post/comment deletion
 - CORS configuration for cross-origin requests
 
@@ -191,24 +194,12 @@ mini-linkedin/
 - Modern, clean interface
 - Real-time updates for interactions
 - Loading states and error handling
-- Profile photo display with fallback avatars
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
 
 ## 📝 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🐛 Known Issues
-
-- Profile photo upload requires server restart to create uploads directory
-- TypeScript types for js-cookie need to be installed manually
 
 ## 🔮 Future Enhancements
 
